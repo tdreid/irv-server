@@ -44,7 +44,6 @@ describe('application logic', () => {
                     List.of('Ellsworth','Pinckney','Adams')
                 )
             }));
-           
        });
        
         it('converts input to immutable List', () => {
@@ -58,7 +57,7 @@ describe('application logic', () => {
                     List.of('Mars', 'Venus', 'Earth')
                 )
             }));
-        });       
+        });
        
     });
     
@@ -75,7 +74,7 @@ describe('application logic', () => {
                     List.of('Pinckney','Ellsworth','Adams'),
                     List.of('Ellsworth','Pinckney','Adams'),
                     List.of('Ellsworth','Adams','Pinckney'),
-                    List.of('Ellsworth','Adams','Pinckney')                    
+                    List.of('Ellsworth','Adams','Pinckney')
                 )
             });
             
@@ -97,7 +96,7 @@ describe('application logic', () => {
                     List.of('Pinckney','Ellsworth','Adams'),
                     List.of('Ellsworth','Pinckney','Adams'),
                     List.of('Ellsworth','Adams','Pinckney'),
-                    List.of('Ellsworth','Adams','Pinckney')                    
+                    List.of('Ellsworth','Adams','Pinckney')
                 )
             });
             
@@ -115,12 +114,12 @@ describe('application logic', () => {
                     List.of('Pinckney','Ellsworth', 'Jefferson', 'Adams'),
                     List.of('Pinckney','Ellsworth', 'Jefferson', 'Adams'),
                     List.of('Ellsworth', 'Jefferson','Adams','Pinckney'),
-                    List.of('Ellsworth', 'Jefferson','Adams','Pinckney')                    
-                )                
+                    List.of('Ellsworth', 'Jefferson','Adams','Pinckney')
+                )
             });
             const nextState = pick(tally(state));
-            expect(nextState.get('candidates')).to.equal(List.of('Adams'));            
-        });           
+            expect(nextState.get('candidates')).to.equal(List.of('Adams'));
+        });
         
         it('declares a candidate with a majority the winner', () => {
             const state = Map({
@@ -134,11 +133,25 @@ describe('application logic', () => {
                     List.of('Pinckney','Ellsworth','Adams'),
                     List.of('Ellsworth','Pinckney','Adams'),
                     List.of('Ellsworth','Adams','Pinckney'),
-                    List.of('Ellsworth','Pinckney','Adams')                    
-                )                
+                    List.of('Ellsworth','Pinckney','Adams')
+                )
             });
             const nextState = pick(tally(state));
-            expect(nextState.get('winner')).to.equal(List.of('Adams'));            
+            expect(nextState.get('winner')).to.equal(List.of('Adams')); 
         });
+        
+        it('declares a tie if there is a tie for majority', () => {
+            const state = Map({
+                candidates: List.of('Adams','Pinckney','Ellsworth'),
+                ballots: List.of(
+                    List.of('Adams','Pinckney','Ellsworth'),
+                    List.of('Adams','Pinckney','Ellsworth'),
+                    List.of('Pinckney','Adams','Ellsworth'),
+                    List.of('Pinckney','Adams','Ellsworth')
+                )
+            });
+            const nextState = pick(tally(state));
+            expect(nextState.get('winner')).to.equal(List.of('Adams','Pinckney'));
+        });        
     });    
-})
+});

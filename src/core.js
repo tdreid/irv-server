@@ -17,7 +17,7 @@ export function tally(state) {
 export function pick(state){
     let result = state.get('result');
     let totalVotes = result.reduce((sum, val) => sum + val);
-    let winner = List(result.filter(votes => votes > (totalVotes/2)).keys());
+    let winner = List(result.filter(votes => votes >= (totalVotes/2)).keys());
 
     if(winner.size > 0){
         return state.update('winner', () => winner);
