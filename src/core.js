@@ -10,7 +10,14 @@ export function vote(state, ballot) {
 
 export function tally(state) {
     let result = Map([]);
-    state.get('ballots').forEach(ballot => result = result.update(ballot.get(0),0,total => total + 1));
+    state.get('ballots').forEach(ballot => {
+      ballot.forEach(name => {
+          if (state.get('ballots').indexOf(name)) {
+            result = result.updateIn([name],0,total => total + 1);
+            return false;
+          }
+      });
+    });
     return state.set('result', result);
 }
 
