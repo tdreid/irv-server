@@ -47,4 +47,31 @@ describe('reducer', () => {
 
         expect(nextState.get('winner')).to.equal(List.of('Mars'));
     });
+    
+    it('has an initial state', () => {
+        const action = {type: 'SLATE', candidates: ['Venus', 'Pluto', 'Jupiter']};
+        const nextState = reducer(undefined, action);
+        expect(nextState.get('candidates')).to.equal(List.of('Venus','Pluto','Jupiter'));
+    });    
+    
+    it('is reducible',() => {
+        const actions =[
+            {type: 'SLATE', candidates: ['Steve', 'Paige', 'Erika', 'Paige']},
+            {type: 'VOTE', ballot:['Steve']},
+            {type: 'VOTE', ballot:['Steve']},
+            {type: 'VOTE', ballot:['Roy']},
+            {type: 'VOTE', ballot:['Roy']},
+            {type: 'VOTE', ballot:['Erika']},
+            {type: 'VOTE', ballot:['Erika']},
+            {type: 'VOTE', ballot:['Erika']},
+            {type: 'VOTE', ballot:['Steve']},
+            {type: 'VOTE', ballot:['Paige']},
+            {type: 'VOTE', ballot:['Steve']},
+            {type: 'VOTE', ballot:['Paige']},
+            {type: 'TALLY'},
+            {type: 'PICK'}            
+        ];
+        const finalState = actions.reduce(reducer, Map());
+        expect(finalState.get('candidates')).to.equal(List.of('Steve', 'Erika'));
+    });
 });

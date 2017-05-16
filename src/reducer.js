@@ -1,6 +1,7 @@
 import {slate, vote, tally, pick} from './core';
+import {INITIAL_STATE} from './core';
 
-export default function reducer(state, action){
+export default function reducer(state = INITIAL_STATE, action){
     switch (action.type) {
         case 'SLATE':
             return slate(state, action.candidates);
@@ -11,5 +12,5 @@ export default function reducer(state, action){
         case 'PICK':
             return pick(state);            
     }
-    return state
+    return state;
 }

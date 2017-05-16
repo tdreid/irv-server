@@ -1,11 +1,13 @@
 import {List, Map} from 'immutable';
 
+export const INITIAL_STATE = Map();
+
 export function slate(state, candidates) {
     return state.set('candidates', List(candidates));
 }
 
 export function vote(state, ballot) {
-   return state.update('ballots', ballots => ballots.push(List(ballot))); 
+   return state.update('ballots', List([]), ballots => ballots.push(List(ballot))); 
 }
 
 export function tally(state) {
