@@ -32,8 +32,19 @@ describe('reducer', () => {
         });
         const action = {type:'TALLY'};
         const nextState = reducer(initialState, action);
+
         expect(nextState.get('result')).to.equal(Map({'Mars':3}));
     });    
     
-    it('handles PICK', () => {});    
+    it('handles PICK', () => {
+        const initialState = Map({
+            result:Map({
+                'Mars':3
+            })
+        });
+        const action = {type:'PICK'};
+        const nextState = reducer(initialState, action);
+
+        expect(nextState.get('winner')).to.equal(List.of('Mars'));
+    });
 });
